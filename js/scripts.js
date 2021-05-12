@@ -8,3 +8,4 @@ let MyName = 'nick';
 let text = document.getElementById("food").innerHTML;
 document.getElementById("food").innerHTML = text.slice(0, text.indexOf(':')+1) + ' ' + favoriteFood[0] + text.slice(text.indexOf(':')+1);
 document.write(favoriteFood[1]);
+clickIt();
