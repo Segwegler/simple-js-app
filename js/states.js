@@ -9,7 +9,8 @@
   Example state
   
 0:{
-		nextState: null, //this might not be needed 
+        //these first 4 variables seem like they wont be needed
+		nextState: null, //where ok will lead
 		prevState: 2, //this should be where the back button will lead
 		homeState: 0, //where the home button will lead
 		message: "Main", //debug message
@@ -33,57 +34,62 @@
 let state = 0;
 //the list of states, each state has 
 
-let states = {//main menu
-	0:{
+let states = {
+	0:{//main menu
 		nextState: null,
 		prevState: 2,
 		homeState: 0,
 		message: "Main",
 		prevButton: function(){
-			let active = document.getElementsByClassName("menu__item__active")[0];
-			let selection = parseInt(active.id.slice(active.id.lastIndexOf("_")+1));
-			let menuItems = document.getElementsByClassName("menu__item");
+			let active = document.getElementsByClassName("menu__item__active")[0];//get the div that has this class
+			let selection = parseInt(active.id.slice(active.id.lastIndexOf("_")+1));//taking the index out of the id of the div
+			let menuItems = document.getElementsByClassName("menu__item");//get a list of menu items
 			
-			if(selection !== 0){
-				selection--;
-				active.classList.remove("menu__item__active");
-				menuItems[selection].classList.add("menu__item__active");
+			if(selection !== 0){//check if we can move up the list
+		      selection--;//shift the selection index back one
+		      active.classList.remove("menu__item__active"); //removes the active class from the past active menu item
+		      menuItems[selection].classList.add("menu__item__active"); //add the active class to the current active item
+              
 			}
 		},
-		nextButton: function(){
+		nextButton: function(){//similar to prevButton function
 			let active = document.getElementsByClassName("menu__item__active")[0];
 			let selection = parseInt(active.id.slice(active.id.lastIndexOf("_")+1));
 			let menuItems = document.getElementsByClassName("menu__item");
 			
-			if(selection < menuItems.length-1){
-				selection++;
-				active.classList.remove("menu__item__active");
-				menuItems[selection].classList.add("menu__item__active");
+			if(selection < menuItems.length-1){//makes sure that the slection is not past the end of the list
+		      selection++;
+		      active.classList.remove("menu__item__active");
+		      menuItems[selection].classList.add("menu__item__active");
+              
 			}
 		},
 		homeButton: function(){
-			state = this.homeState;
-			console.log(state);
+          
 		},
 		backButton: function(){
-			state = this.prevState;
-			console.log(state);
-		},
-		okButton: function(clickSelection){
-			let active = document.getElementsByClassName("menu__item__active")[0];
-			let selection = clickSelection ? clickSelection : parseInt(active.id.slice(active.id.lastIndexOf("_")+1));
 			
-			if(selection === 0){
-		      console.log("Num List");
-              state = 1; //state of num list
-              draw();
+		},
+		okButton: function(clickSelection){ //activate the menu item (most will porbeply cause state change)
+		  //we parse the selector out of the id of the active menu item
+          let active = document.getElementsByClassName("menu__item__active")[0];
+		  let selection = clickSelection ? clickSelection : parseInt(active.id.slice(active.id.lastIndexOf("_")+1));
+			
+          //if to move to another state
+		  if(selection === 0){
+		    console.log("Num List");
+            state = 1; //state of num list
+            draw();
               
-			}else if(selection == 1){
-			 console.log("other " + selection)
-			}
+		  }else if(selection == 1){
+		    console.log("other " + selection)
+          }
 			
 		},
-		display: function(){
+        //display function 
+        //writes the html for the menu
+        // this should be simplified a little, loop for habs and for search formats
+		display: function(){ 
 			document.getElementById("screen").innerHTML = `
 			<div class="menu__title">POKeDEX	Table Of Contents</div>
             <div class="menu">
@@ -104,7 +110,7 @@ let states = {//main menu
               <div class="menu__item" onClick="states[state].okButton(11)" id="menu_item_11"> TYPE MODE </div>
               <div class="menu__item" onClick="states[state].okButton(12)" id="menu_item_12"> LIGHTEST MODE </div>
               <div class="menu__item" onClick="states[state].okButton(13)" id="menu_item_13"> SMALLEST MODE </div>
-            </div> `; // this should be simplified a little, loop for habs and for search formats
+            </div> `; 
 		},
 	},
   
@@ -142,56 +148,35 @@ let states = {//main menu
           }
 		},
 		homeButton: function(){
-			state = homeState;
-			console.log(state);
+		  state = 0;
+          draw();
 		},
 		backButton: function(){
-			
+		  state = 0;
+          draw();
 		},
 		okButton: function(){
 			
 		},
 		display: function(){
 		  let tallest = null; //id of tallet pokemon, used in loop
-          document.getElementById("screen").innerHTML = '';
-          for (let i = 1; i<pokemonList.length; ++i){
+          for (let i = 1; i<pokemonList.length; ++i){ //loop to add all html for pokemon to screen
             document.getElementById("screen").innerHTML += getPokemonHtml(pokemonList[i]); // add html content to page
-    
-            if(tallest !== null){
+            
+            //if to track the tallest pokemon
+            if(tallest !== null){ 
               if(pokemonList[i].height > pokemonList[tallest].height){
                 tallest = pokemonList[i].id; 
               }
             }else{
               tallest = pokemonList[i].id;
             }
-          }
-          tallest = pokemonList[tallest];
-          var inner = document.getElementById(`${tallest.id}_${tallest.name}`).getElementsByClassName("pokemon-info")[0].innerHTML += `<div class="pokemon-info__item tallest">The Tallest</div>`;
+          }//end of for loop 
+          
+          tallest = pokemonList[tallest];//gets the actual pokemon from the index
+          var inner = document.getElementById(`${tallest.id}_${tallest.name}`).getElementsByClassName("pokemon-info")[0].innerHTML += `<div class="pokemon-info__item tallest">The Tallest</div>`;//adds a identifing line to the tallest pekemon
 
-          document.getElementsByClassName("pokemon")[0].classList.add("pokemon__active");
-		}
-	},
-	2:{
-		nextState: 0,
-		prevState: 1,
-		message: "sub 2",
-		prevButton: function(){
-			
-		},
-		nextButton: function(){
-			
-		},
-		homeButton: function(){
-			
-		},
-		backButton: function(){
-			
-		},
-		okButton: function(){
-			
-		},
-		display: function(){
-			
+          document.getElementsByClassName("pokemon")[0].classList.add("pokemon__active");// make the first pokemon active
 		}
 	}
 	
