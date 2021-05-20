@@ -91,6 +91,16 @@ let pokemonRepository = (function(){
   
   //getPokemonByName takes a string for a name and retuns the pokemon of that name
   //the name is not case sensitive
+  function getPokemonByName(name){
+    name = name.toLowerCase();
+    return pokemonList.filter(monster => monster.name.toLowerCase() === name);
+    
+  }
+  
+  
+  function getPokemonByType(type){
+    type = type.toUpperCase();
+    return pokemonList.filter(monster => monster.types.includes(type));
   }
   
   return { getAll: getAll, add: add, getPokemonByName: getPokemonByName, getPokemonByType: getPokemonByType};
