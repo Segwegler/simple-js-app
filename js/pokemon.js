@@ -46,22 +46,23 @@ function makePokemon(id, name, height, weight, types, desc, canEvolve, nextEvolu
   return monster;
 }
 
-function displayPokemon(){
-  let tallest = null; //id of tallet pokemon, used in loop
-  for (let i = 1; i<pokemonList.length; ++i){ //loop to add all html for pokemon to screen
-    document.getElementById("screen").innerHTML += getPokemonHtml(pokemonList[i]); // add html content to page
-            
-    //if to track the tallest pokemon
-    if(tallest !== null){ 
-      if(pokemonList[i].height > pokemonList[tallest].height){
-        tallest = pokemonList[i].id; 
-      }
-    }else{
-      tallest = pokemonList[i].id;
-    }
-  }//end of for loop 
-          
-  tallest = pokemonList[tallest];//gets the actual pokemon from the index
+function addToElement(id, string){
+  document.getElementById(id).innerHTML += string;
+}
+
+function displayPokemon(pList){
+  
+  let tallest = {height:null, id:null}; //id of tallet pokemon, used in loop
+  
+  pList.forEach(function(monster){
+                        addToElement("screen", getPokemonHtml(monster));
+                        if(tallest.height < monster.height){
+                          tallest.height = monster.height;
+                          tallest.id = monster.id;
+                        }
+                      });
+  
+  tallest = pList[tallest.id];//gets the actual pokemon from the index
   var inner = document.getElementById(`${tallest.id}_${tallest.name}`).getElementsByClassName("pokemon-info")[0].innerHTML += `<div class="pokemon-info__item tallest">The Tallest</div>`;//adds a identifing line to the tallest pekemon
 }
 

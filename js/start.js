@@ -1,1 +1,1 @@
-displayPokemon();
+displayPokemon(pokemonList);
