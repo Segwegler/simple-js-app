@@ -19,6 +19,9 @@ h2 {
   width: 90%;
   background-color: #bdb08c;
   border-radius: 25px;
+  height: 80%;
+  margin-bottom: 25px;
+  overflow-y: scroll;
 }
 
 ::-webkit-scrollbar {
@@ -114,4 +117,11 @@ nav {
 .menu__item {
 	margin-below: 10px;
 	margin-left: 20px;
+}
+
+.menu__item__active {/*adding a arrow to active menu item*/
+	margin-left: 3px;
+	display: list-item;
+    list-style-type: disclosure-closed;       
+    list-style-position: inside;
 }

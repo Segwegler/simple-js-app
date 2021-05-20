@@ -1,0 +1,32 @@
+<!DOCKTYPE HTML5>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PokeDEX</title>
+    
+    <!-- Loo at Dogica font or similar  -->
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <script src="js/states.js"></script>
+    <script src="js/pokemon.js"></script>
+  </head>
+  <body>
+    <h1>POK&#233DEX</h1>
+    <div class="screen" id="screen">
+      
+    </div>
+    <nav>
+	 <svg viewBox="2.383 4.32 251.719 230.449" class="nav-button" >
+  		<path onClick="states[state].prevButton();" id="arrow-back" d="M 85.104 41.679 Q 128.243 -33.039 171.381 41.679 L 239.722 160.051 Q 282.861 234.769 196.584 234.769 L 59.901 234.769 Q -26.376 234.769 16.763 160.051 Z" data-bx-shape="triangle -26.376 -33.039 309.237 267.808 0.5 0.279 1@03aca1be"></path>
+	 </svg>
+	 <button onClick="states[state].homeButton();" class="nav-button">Home</button>
+	 <button onClick="states[state].backButton();" class="nav-button">Back</button>
+	 <button onClick="states[state].okButton();" class="nav-button">OK</button>
+	 <svg viewBox="2.383 4.32 251.719 230.449" class="nav-button">
+  		<path onClick="states[state].nextButton();" id="arrow-next" d="M 85.104 41.679 Q 128.243 -33.039 171.381 41.679 L 239.722 160.051 Q 282.861 234.769 196.584 234.769 L 59.901 234.769 Q -26.376 234.769 16.763 160.051 Z" data-bx-shape="triangle -26.376 -33.039 309.237 267.808 0.5 0.279 1@03aca1be"></path>
+	 </svg>
+    </nav>
+    <script src="js/start.js"></script>
+  </body>
+
+</html>
