@@ -1,1 +1,0 @@
-displayPokemon(pokemonList);
