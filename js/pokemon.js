@@ -9,11 +9,91 @@ let pokemonRepository = (function(){
     return pokemonList;
   }
   
-  function add(monster){
-    pokemonList.push(monster);
+  
+  function checkTypes(monster){
+    //check that id is an int
+    if(typeof(monster.id) !== "number" || monster.id % 1 !== 0)
+      return {good:false, var:monster.id, key:"id", error:"ERROR: id must be an int"};
+    
+    
+    //check that name is a string
+    if(typeof(monster.name) !== "string" )
+      return {good:false, var:monster.name, key:"name", error:"ERROR: name must be a string"};
+    
+    
+    //check that height is a number
+    if(typeof(monster.height) !== "number")
+      return {good:false, var:monster.height, key:"height", error:"ERROR: height must be a number"};
+    
+    
+    //check that weight is a number
+    if(typeof(monster.weight) !== "number")
+      return {good:false, var:monster.weight, key:"weight", error:"ERROR: weight must be a number"};
+    
+    
+    //check that types is an array of strings 
+    if(!Array.isArray(monster.types)){
+      return {good:false, var:monster.types, key:"types", error:"ERROR: types must be an array of strings"};
+    }else{//make sure the elemets of the object are strings
+      let allStrings = true;
+      monster.types.forEach(function(e){(typeof(e) !== "string") ? allStrings=false: null});
+      if(!allStrings)
+        return {good:false, var:monster.types, key:"types", error:"ERROR: types must be an array of strings"};
+    }
+    
+    
+    //check description is a string
+    if(typeof(monster.description) !== "string" )
+      return {good:false, var:monster.description, key:"description", error:"ERROR: description must be a string"};
+    //check if can evolve is a bool
+    if(typeof(monster.canEvole) !== "boolean")
+      return {good:false, var:monster.canEvole, key:"canEvolve", error:"ERROR: canEvolve must be a boolean"};
+    
+    //chech can evolve
+    if(monster.canEvole === true){
+      // check that nextEvolution is an int
+      if(typeof(monster.nextEvolution) !== "number" || (monster.nextEvolution % 1)!== 0 || monster.nextEvolution < 1)
+        return {good:false, var:monster.nextEvolution, key:"nextEvolution", error:"ERROR: nextEvolution must be a int that is 1 or higher"};
+    }else{
+      if(monster.nextEvolution !== null)
+        return {good: false, var:monster.nextEvolution, key:"nextEvolution", error:"ERROR: if canEvolve is false nextEvolution must be null"};
+    }
+    
+    
+    // check that prevEvolution is a number or null
+    if(!(typeof(monster.prevEvolution) === "number" && (monster.prevEvolution % 1)=== 0 && monster.prevEvolution >= 1) && monster.prevEvolution !== null)
+      return {good:false, var:monster.prevEvolution, key:"prevEvolution", error:"ERROR: prevEvolution must be a int or null - "+monster.name+ " - "+monster.prevEvolution};
+    
+    
+    //chech that species is a string
+    if(typeof(monster.species) !== "string")
+      return {good:false, var:monster.species, key:"species", error:"ERROR: description must be a string"};
+    
+    
+    
+    //return that there were no errors 
+    return {good:true, var:null, error:null};
   }
   
-  return { getAll: getAll, add: add};
+  //add a pokemon to the list this uses checkTypes to verify that it is a good object
+  //will return true if object was added 
+  //will return error object if object was not added
+  function add(monster){
+    let check = checkTypes(monster);
+    if(check.good){
+      pokemonList.push(monster);
+      return true;
+    }else{
+      console.warn("tried to add either a non pokemon or a poorly constructed one to the repository", (typeof(check.var) === "undefined") ? "Missing key: " + check.key : check.error);
+      return check;
+    }
+  }
+  
+  //getPokemonByName takes a string for a name and retuns the pokemon of that name
+  //the name is not case sensitive
+  }
+  
+  return { getAll: getAll, add: add, getPokemonByName: getPokemonByName, getPokemonByType: getPokemonByType};
   
 })();
 
@@ -41,6 +121,8 @@ function makePokemon(id, name, height, weight, types, desc, canEvolve, nextEvolu
     prevEvolution: prevEvolution,
     species: species,
   };
+  
+  
   return monster;
 }
 
