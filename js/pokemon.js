@@ -113,18 +113,19 @@ let pokemonRepository = (function(){
 // string - name
 // float - height
 // float - weight
-// array of strings - types
+// array of strings - types - will be all uppercase strings
 // string - description 
 // bool - canEvolve
 // int - nextEvolution - The id of the next evolution
 // int - prevEvolution - The id of the prev evolution
+// string - species - This is a short discription ususaly comparing the poke mon to an animal
 function makePokemon(id, name, height, weight, types, desc, canEvolve, nextEvolution, prevEvolution, species){
   let monster = {
     id: id,
     name: name,
     height: height,
     weight: weight,
-    types: types,
+    types: types.map(type => type.toUpperCase()),
     description: desc,
     canEvole: canEvolve,
     nextEvolution: nextEvolution,
