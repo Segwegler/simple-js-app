@@ -185,12 +185,9 @@ function getPokemonHtml(monster){
 }
 
 
-function displayPokemon(pList){
-  //get empty list to fill
-  
-  
+function displayPokemon(){  
   //add each pokemon to the list
-  pList.forEach(function(monster){ pokemonRepository.addListItem(monster); });
+  pokemonRepository.getAll().forEach(function(monster){ pokemonRepository.addListItem(monster); });
 }
 
 
