@@ -73,9 +73,11 @@ let pokemonRepository = (function(){
     
     //return that there were no errors 
     return {good:true, var:null, error:null};
-  }
+  }//END OF checkTypes function
   
+  //FUNCTION add
   //add a pokemon to the list this uses checkTypes to verify that it is a good object
+  //takes a pokemon object
   //will return true if object was added 
   //will return error object if object was not added
   function add(monster){
@@ -92,20 +94,47 @@ let pokemonRepository = (function(){
   //getPokemonByName takes a string for a name and retuns the pokemon of that name
   //the name is not case sensitive
   function getPokemonByName(name){
-    name = name.toLowerCase();
-    return pokemonList.filter(monster => monster.name.toLowerCase() === name);
+    if(typeof(name) !== "string"){
+      return {good:false , error:"ERROR: Name must be a string"};
+    }
+    name = name.toUpperCase();
+    return pokemonList.filter(monster => monster.name.toUpperCase() === name);
     
   }
   
-  
+  //FUNCTION getPokemonByType
+  //takes a string
   function getPokemonByType(type){
+    if(typeof(type) !== "string"){
+      return {good:false , error:"ERROR: Type must be a string"};
+    }
     type = type.toUpperCase();
     return pokemonList.filter(monster => monster.types.includes(type));
   }
   
-  return { getAll: getAll, add: add, getPokemonByName: getPokemonByName, getPokemonByType: getPokemonByType};
+  function addListItem(monster){
+    let list = document.querySelector(".screen");
+    let item = document.createElement("li");
+    let button = document.createElement("button");
+      
+    //populate button element
+    button.innerText = monster.name;
+    button.classList.add("pokemon");
+    button.setAttribute('id', `${monster.id} ${monster.name}`);
+      
+    //adding button to list item
+    item.appendChild(button);
+      
+    //adding list item to list
+    list.appendChild(item);
+  }
   
-})();
+  
+  return { getAll: getAll, add: add, getPokemonByName: getPokemonByName, getPokemonByType: getPokemonByType, addListItem: addListItem};
+  
+})();//END OF IIFE for pokemon repository
+
+
 
 //Function Pokemon creates and returns an object conraining information pertaining to a pokemon
 //keys included in a pokemon object are 
@@ -151,25 +180,13 @@ function getPokemonHtml(monster){
       </div>`
 }
 
-//used to add html into an elemnt specified by an id
-function addToElement(id, string){
-  document.getElementById(id).innerHTML += string;
-}
 
 function displayPokemon(pList){
+  //get empty list to fill
   
-  let tallest = {height:null, id:null}; //id of tallet pokemon, used in loop
   
-  pList.forEach(function(monster){
-                        addToElement("screen", getPokemonHtml(monster));
-                        if(tallest.height < monster.height){
-                          tallest.height = monster.height;
-                          tallest.id = monster.id;
-                        }
-                      });
-  
-  tallest = pList[tallest.id];//gets the actual pokemon from the index
-  var inner = document.getElementById(`${tallest.id}_${tallest.name}`).getElementsByClassName("pokemon-info")[0].innerHTML += `<div class="pokemon-info__item tallest">The Tallest</div>`;//adds a identifing line to the tallest pekemon
+  //add each pokemon to the list
+  pList.forEach(function(monster){ pokemonRepository.addListItem(monster); });
 }
 
 
