@@ -15,32 +15,20 @@ h2 {
 }
 
 .screen {
-  margin: 0 auto;
+  margin: auto;
   width: 90%;
   background-color: #bdb08c;
-  border-radius: 25px;
-}
-
-::-webkit-scrollbar {
-    width: 0;  /* Remove scrollbar space */
-    background: transparent;  /* Optional: just make scrollbar invisible */
+  list-style: none;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .pokemon {
-  margin: 20px 50px;
-  height: 200px;
-  width: 80%;
-  padding-left: 10px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  font-size: 14pt;
+  min-width: 20%;
   background-color: #f8f8f8;
   color: black;
-  border-radius: 10px
-}
-
-.pokemon__active {
-  border: 5px double black;
+  padding: 10px;
 }
 
 .pokemon-info {
@@ -57,61 +45,3 @@ h2 {
   width: 128px;
 }
 
-.tallest {
-  background-color: yellow;
-}
-
-
-nav {
-	margin: 0 30%;
-	display: flex;
-	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-	flex-direction: row;
-	justify-content: center;
-}
-
-#arrow-back {
-	transform-box: fill-box;
-	transform-origin: center;
-	transform: rotate(-90deg);
-	filter: drop-shadow( -5px 5px 5px rgba(0, 0, 0, 1));
-}
-
-#arrow-next {
-	transform-box: fill-box;
-	transform-origin: center;
-	transform: rotate(90deg);
-	filter: drop-shadow( 5px 5px 5px rgba(0, 0, 0, 1));
-	
-}
-
-.nav-button {
-	flex-grow: 1;
-	height: 50px;
-	fill: yellow;
-}
-
-.menu {
-    background-color:white;
-	height: 90%;
-    width: 100%;
-    margin: 0 auto;
-    padding-left: 10px;
-}
-
-
-.menu__title {
-	color: black;
-	text-align: center;
-	font-size: 25px;
-	font-Weight: 700;
-	
-}
-
-.menu__header {
-	color: red;
-}
-.menu__item {
-	margin-below: 10px;
-	margin-left: 20px;
-}
