@@ -112,6 +112,10 @@ let pokemonRepository = (function(){
     return pokemonList.filter(monster => monster.types.includes(type));
   }
   
+  function showDetails(monster){
+    console.log(monster.name);
+  }
+  
   function addListItem(monster){
     let list = document.querySelector(".screen");
     let item = document.createElement("li");
@@ -121,7 +125,7 @@ let pokemonRepository = (function(){
     button.innerText = monster.name;
     button.classList.add("pokemon");
     button.setAttribute('id', `${monster.id} ${monster.name}`);
-      
+    button.addEventListener('click', function(){showDetails(monster); })
     //adding button to list item
     item.appendChild(button);
       
