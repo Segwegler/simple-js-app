@@ -5,10 +5,41 @@
 //IIFE container for pokemon list with simple public accessor and setter
 let pokemonRepository = (function(){
   let pokemonList = [];
+  let apiUrl = "https://pokeapi.co/api/v2/pokemon/?limit=150"; 
+  
   function getAll(){
     return pokemonList;
   }
   
+  function loadList(){
+    return fetch(apiUrl).then(function(response){ 
+      return response.json();
+    }).then(function(json){
+      json.results.forEach(function(item){
+        let monster = {
+          name: item.name,
+          detailsUrl: item.url
+        };
+        add(monster);
+      });
+    }).catch(function(e) {
+      console.log(e);
+    });
+  }
+  
+  function loadDetails(monster){
+    let url = monster.detailsUrl;
+    return fetch(url).then(function(response){
+      return response.json();
+    }).then(function(details){
+      monster.imageUrl = details.sprites.front_default;
+      monster.height = details.height;
+      monster.weight = details.weight;
+      monster.types = details.types;
+    }).catch(function(e){
+      console.log(e);
+    });
+  }
   
   function checkTypes(monster){
     //check that id is an int
@@ -81,13 +112,15 @@ let pokemonRepository = (function(){
   //will return true if object was added 
   //will return error object if object was not added
   function add(monster){
-    let check = checkTypes(monster);
-    if(check.good){
+    if(typeof(monster.name) === "string"){
       pokemonList.push(monster);
       return true;
     }else{
+      console.log(monster, "error adding pokemon to list");
+      /*
       console.warn("tried to add either a non pokemon or a poorly constructed one to the repository", (typeof(check.var) === "undefined") ? "Missing key: " + check.key : check.error);
       return check;
+      */
     }
   }
   
@@ -113,11 +146,15 @@ let pokemonRepository = (function(){
   }
   
   function showDetails(monster){
-    console.log(monster.name);
+    loadDetails(monster).then(function(){
+      console.log(monster);
+    }).catch(function(e){
+      console.log(e);
+    });
   }
   
   function addListItem(monster){
-    let list = document.querySelector(".screen");
+    let list = document.querySelector(".pokemon-list");
     let item = document.createElement("li");
     let button = document.createElement("button");
       
@@ -134,10 +171,29 @@ let pokemonRepository = (function(){
   }
   
   
-  return { getAll: getAll, add: add, getPokemonByName: getPokemonByName, getPokemonByType: getPokemonByType, addListItem: addListItem};
+  return { getAll: getAll, add: add, getPokemonByName: getPokemonByName, getPokemonByType: getPokemonByType, addListItem: addListItem, loadList: loadList, loadDetails: loadDetails};
   
 })();//END OF IIFE for pokemon repository
 
+
+function displayPokemon(){  
+  //add each pokemon to the list
+  pokemonRepository.loadList().then(function() {
+    pokemonRepository.getAll().forEach(function(monster){ pokemonRepository.addListItem(monster); });
+  })
+  
+}
+
+
+
+
+//
+//
+//  TEMPORARY ADDITION OF POKEMON FOR TESTING
+//
+//
+
+/*
 
 
 //Function Pokemon creates and returns an object conraining information pertaining to a pokemon
@@ -185,19 +241,9 @@ function getPokemonHtml(monster){
 }
 
 
-function displayPokemon(){  
-  //add each pokemon to the list
-  pokemonRepository.getAll().forEach(function(monster){ pokemonRepository.addListItem(monster); });
-}
 
 
 
-
-//
-//
-//  TEMPORARY ADDITION OF POKEMON FOR TESTING
-//
-//
 
 
 //Bulbasaur Evolution
@@ -221,6 +267,6 @@ pokemonRepository.add(makePokemon(8,"Wartortle", 1.0, 22.5, ["WATER"], "This POK
 
 pokemonRepository.add(makePokemon(9,"Blastoise", 1.6, 85.5, ["WATER"], "It crushes its foe under its heavy body to cause fainting. In a pinch, it will withdraw inside its shell.", false, null, 8, "Shellfish Pokémon"));
 
-
+*/
 
 
