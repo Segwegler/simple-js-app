@@ -19,7 +19,8 @@ let pokemonRepository = (function(){
       json.results.forEach(function(item){
         let monster = {
           name: item.name,
-          detailsUrl: item.url
+          detailsUrl: item.url,
+          id: parseInt(item.url.slice(item.url.indexOf("pokemon")+8,item.url.length-1))
         };
         add(monster);
       });
