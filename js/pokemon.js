@@ -166,6 +166,9 @@ let pokemonRepository = (function(){
     });
   }
   
+  
+  ///addListItem function
+  //
   function addListItem(monster){
     let list = document.querySelector(".pokemon-list");
     let item = document.createElement("li");
@@ -184,7 +187,135 @@ let pokemonRepository = (function(){
   }
   
   
-  return { getAll: getAll, add: add, getPokemonByName: getPokemonByName, getPokemonByType: getPokemonByType, addListItem: addListItem, loadList: loadList, loadDetails: loadDetails};
+  //
+  //Modal Functions
+  //
+  
+  let activePokemon = null;
+  
+  let modalContainer = document.querySelector("#modal-container");
+  function showModal(monster){
+    
+    activePokemon = monster.id;
+    
+    //clear the current contents
+    modalContainer.innerHTML = "";
+
+    //create a new modal element
+    let modal = document.createElement("div");
+    modal.classList.add("modal");
+
+    //create a close button element
+    let closeButtonElement = document.createElement("button");
+    closeButtonElement.classList.add("modal-close");
+    closeButtonElement.innerText = "Close";
+    closeButtonElement.addEventListener("click",hideModal);
+
+    //create an element for the title
+    let titleElement = document.createElement("h1");
+    titleElement.innerText = monster.name;
+    
+    //create the container for the info
+    let infoContainerElement = document.createElement("div");
+
+    //create the body element
+    let heightElement = document.createElement("p");
+    heightElement.innerText = `Height: ${monster.height}`;
+    
+    let imageElement = document.createElement("img");
+    imageElement.src = monster.imageUrl;
+    //add all the elements to the modal 
+    modal.appendChild(closeButtonElement);
+    modal.appendChild(titleElement);
+    
+    infoContainerElement.appendChild(imageElement);
+    infoContainerElement.appendChild(heightElement);
+    modal.appendChild(infoContainerElement);
+    
+    modalContainer.appendChild(modal);
+    modalContainer.setAttribute("draggable","false");
+
+    //display the modal
+    if(!modalContainer.classList.contains("is-visible")){
+      modalContainer.classList.add("is-visible");
+    }
+  }
+  
+  
+  //hideModal sets display none for the modal
+  function hideModal(){
+    modalContainer.classList.remove("is-visible");
+    activePokemon = null;
+  }
+
+  //
+  //Event listeners
+  //
+  let startX = null;
+  let lastX = null;
+  
+  
+  
+  window.addEventListener("keydown", (e)=>{
+    
+    if(e.key === "Escape" && modalContainer.classList.contains("is-visible")) {
+      hideModal();
+    }
+  });
+  
+  modalContainer.addEventListener("click", (e)=> {
+      let target = e.target;
+      if(target === modalContainer){
+        hideModal();
+      }
+  });
+  
+  //pointer event listeners
+  modalContainer.addEventListener("pointerdown", (e)=>{
+    console.log("start",e.pageX);
+    startX = e.pageX;
+    
+  });
+  
+  //move
+  modalContainer.addEventListener("pointermove", (e)=>{
+    //console.log("move",e.pageX);
+    lastX = e.pageX;
+    
+  });
+  
+  
+  //ending event
+  //
+  //This should be pointer up but its not working for me for some reason
+  //
+  modalContainer.addEventListener("pointercancel", (e)=>{
+    console.log("end",lastX);
+    if(lastX > startX){
+      if(lastX-startX > 5){
+        if(activePokemon<pokemonLimit){
+          showDetails(getPokemonById(activePokemon+1)[0]);
+          console.log("next");
+          startX = null;
+          lastX = null;
+        }
+      }
+    }else{
+      if(startX - lastX > 5){
+        if(activePokemon > 1)
+          showDetails(getPokemonById(activePokemon-1)[0]);
+          console.log("prev")
+          startX = null;
+          lastX = null;
+        
+        }
+    }
+  });
+
+  
+  
+  
+  return { getAll: getAll, add: add, getPokemonByName: getPokemonByName, getPokemonById: getPokemonById, getPokemonByType: getPokemonByType, addListItem: addListItem, loadList: loadList, loadDetails: loadDetails};
   
 })();//END OF IIFE for pokemon repository
 
@@ -195,62 +326,6 @@ function displayPokemon(){
     pokemonRepository.getAll().forEach(function(monster){ pokemonRepository.addListItem(monster); });
   })
   
-}
-
-
-
-
-//
-//
-//  TEMPORARY ADDITION OF POKEMON FOR TESTING
-//
-//
-
-/*
-
-
-//Function Pokemon creates and returns an object conraining information pertaining to a pokemon
-//keys included in a pokemon object are 
-// int - id - the pokedex ID
-// string - name
-// float - height
-// float - weight
-// array of strings - types - will be all uppercase strings
-// string - description 
-// bool - canEvolve
-// int - nextEvolution - The id of the next evolution
-// int - prevEvolution - The id of the prev evolution
-// string - species - This is a short discription ususaly comparing the poke mon to an animal
-function makePokemon(id, name, height, weight, types, desc, canEvolve, nextEvolution, prevEvolution, species){
-  let monster = {
-    id: id,
-    name: name,
-    height: height,
-    weight: weight,
-    types: types.map(type => type.toUpperCase()),
-    description: desc,
-    canEvole: canEvolve,
-    nextEvolution: nextEvolution,
-    prevEvolution: prevEvolution,
-    species: species,
-  };
-  
-  
-  return monster;
-}
-
-
-//returns formatted HTML info for the given pokemon
-function getPokemonHtml(monster){
-  return `<div class="pokemon" id="${monster.id}_${monster.name}">
-        <div class="pokemon-info">
-          <div class="pokemon-info__item">No ${monster.id.toString().padStart(3,'0')} ${monster.name}</div>
-          <div class="pokemon-info__item">${monster.species}</div>
-          <div class="pokemon-info__item">HT: ${monster.height} m</div>
-          <div class="pokemon-info__item">WT: ${monster.weight} kg</div>
-        </div>
-        <a href="http://pokemondb.net/pokedex/${monster.name.toLowerCase()}" target="_blank"><img src="https://img.pokemondb.net/sprites/firered-leafgreen/normal/${monster.name.toLowerCase()}.png" alt="image of ${monster.name}" class="pokemon-image"></a>
-      </div>`
 }
 
 
