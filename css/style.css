@@ -1,3 +1,11 @@
+/*
+background off white: #f8f8f8
+background beige: #bdb08c
+
+
+*/
+
+
 html body {
   height: 95%;
   background-color: red;
@@ -15,12 +23,18 @@ h2 {
 }
 
 .pokemon-list {
-  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-content: center;
+  margin: 0;
   width: 90%;
+  height: 90%;
   background-color: #bdb08c;
   list-style: none;
   padding-top: 20px;
   padding-bottom: 20px;
+  overflow-y: scroll;
 }
 
 .pokemon {
@@ -29,19 +43,49 @@ h2 {
   background-color: #f8f8f8;
   color: black;
   padding: 10px;
+  display: block;
+  text-align: center;
 }
 
-.pokemon-info {
-  margin-top: 20px;
+.modal {
+  margin: auto;
+  display: inline-block;
+  box-sizing: border-box;
+  background: #fff;
+  padding: 15px;
+  width: 100%;
+  max-width: 700px;
   text-align: left;
-  font-size: 25px;
 }
 
-.pokemon-image {
+.modal-close {
+  float: right;
+  -webkit-appearance: none;
+  border: 0;
+  background: none;
+  color: #777;
+  text-decoration: underline;
+}
+
+.modal h1 {
+  margin-top: 0;
+}
+
+.modal div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.modal p {
+  margin-bottom: 0;
+  
+}
+
+.modal img {
   align-self: flex-end;
   image-rendering: pixelated;
   margin: 10px 10px;
   height: 128px;
   width: 128px;
 }
-
