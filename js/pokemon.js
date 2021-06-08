@@ -103,7 +103,6 @@ let pokemonRepository = (function(){
       return {good:false, var:monster.species, key:"species", error:"ERROR: description must be a string"};
     
     
-    
     //return that there were no errors 
     return {good:true, var:null, error:null};
   }//END OF checkTypes function
@@ -134,6 +133,16 @@ let pokemonRepository = (function(){
     }
     name = name.toUpperCase();
     return pokemonList.filter(monster => monster.name.toUpperCase() === name);
+    
+  }
+  
+  //getPokemonByName takes a string for a name and retuns the pokemon of that name
+  //the name is not case sensitive
+  function getPokemonById(id){
+    if(typeof(id) !== "number"){
+      return {good:false , error:"ERROR: id must be a Number"};
+    }
+    return pokemonList.filter(monster => monster.id === id);
     
   }
   
