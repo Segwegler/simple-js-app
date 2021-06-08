@@ -156,9 +156,11 @@ let pokemonRepository = (function(){
     return pokemonList.filter(monster => monster.types.includes(type));
   }
   
+  //showDetails 
+  //Opens a Modal with the pokemon info and image
   function showDetails(monster){
     loadDetails(monster).then(function(){
-      console.log(monster);
+      showModal(monster, monster.name, `Height: ${monster.height}m Weight: ${monster.weight}`, monster.imageUrl);
     }).catch(function(e){
       console.log(e);
     });
