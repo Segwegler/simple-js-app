@@ -330,31 +330,3 @@ function displayPokemon(){
 
 
 
-
-
-
-
-//Bulbasaur Evolution
-pokemonRepository.add(makePokemon(1,"Bulbasaur", 0.7, 6.9, ["GRASS","POISON"], "There is a plant seed on its back right from the day this POKéMON is born. The seed slowly grows larger.", true, 2, null, "Seed Pokémon"));
-
-pokemonRepository.add(makePokemon(2,"Ivysaur", 1.0, 13.0, ["GRASS","POISON"], "There is a plant bulb on its back. When it absorbs nutrients, the bulb is said to blossom into a large flower.", true, 3, 1, "Seed Pokémon"));
-
-pokemonRepository.add(makePokemon(3,"Venusaur", 2.0, 100.0, ["GRASS","POISON"], "A bewitching aroma wafts from its flower. The fragrance becalms those engaged in a battle.", false, null, 2, "Seed Pokémon"));
-
-//Charmander Evolution
-pokemonRepository.add(makePokemon(4,"Charmander", 0.6, 8.5, ["FIRE"], "From the time it is born, a flame burns at the tip of its tail. Its life would end if the flame were to go out.", true, 5, null, "Lizard Pokémon"));
-
-pokemonRepository.add(makePokemon(5,"Charmeleon", 1.1, 19.0, ["FIRE"], "It lashes about with its tail to knock down its foe. It then tears up the fallen opponent with sharp claws.", true, 6, 4, "Flame Pokémon"));
-
-pokemonRepository.add(makePokemon(6,"Charizard", 1.7, 90.5, ["FIRE","FLYING"], "Its wings can carry this POKéMON close to an altitude of 4,600 feet. It blows out fire at very high temperatures.", false, null, 5, "Flame Pokémon"));
-
-//Squirtle Evolution
-pokemonRepository.add(makePokemon(7,"Squirtle", 0.5, 9.0, ["WATER"], "When it retracts its long neck into its shell, it squirts out water with vigorous force.", true, 8, null, "Tiny Turtle Pokémon"));
-
-pokemonRepository.add(makePokemon(8,"Wartortle", 1.0, 22.5, ["WATER"], "This POKéMON is very popular as a pet. Its fur-covered tail is a symbol of its longevity.", true, 9, 7, "Turtle Pokémon"));
-
-pokemonRepository.add(makePokemon(9,"Blastoise", 1.6, 85.5, ["WATER"], "It crushes its foe under its heavy body to cause fainting. In a pinch, it will withdraw inside its shell.", false, null, 8, "Shellfish Pokémon"));
-
-*/
-
-
