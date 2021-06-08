@@ -5,7 +5,8 @@
 //IIFE container for pokemon list with simple public accessor and setter
 let pokemonRepository = (function(){
   let pokemonList = [];
-  let apiUrl = "https://pokeapi.co/api/v2/pokemon/?limit=150"; 
+  let pokemonLimit = 150;
+  let apiUrl = `https://pokeapi.co/api/v2/pokemon/?limit=${pokemonLimit}`; 
   
   function getAll(){
     return pokemonList;
