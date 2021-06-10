@@ -273,10 +273,11 @@ let pokemonRepository = (function(){
   });
   
   modalContainer.addEventListener("touchend", (e)=>{
-    if(!startX){
+    if(!startX || !lastX){
       return;
     }
-    alert("delta: " + Math.abs(startX - lastX));
+    alert("delta: " + Math.abs(startX - lastX)," Last: "+lastX, " Start: "+startX);
+    console.log("delta: " + Math.abs(startX - lastX)," Last: "+lastX, " Start: "+startX);
     //console.log("start end",Math.abs(startX - lastX));
     if(Math.abs(startX - lastX) > 50){
       if(lastX > startX){
