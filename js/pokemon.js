@@ -254,7 +254,47 @@ let pokemonRepository = (function(){
   let startX = null;
   let lastX = null;
   
+  window.addEventListener("touchstart", (e)=>{
+    
+    //console.log("start touch",e.touches[0].clientX);
+    startX = e.touches[0].clientX;
+    
+  });
   
+  window.addEventListener("touchmove", (e)=>{
+    
+    //console.log("start move",e.touches[0].clientX);
+    lastX = e.touches[0].clientX;
+    
+  });
+  
+  window.addEventListener("touchend", (e)=>{
+    if(!startX){
+      return;
+    }
+    //console.log("start end",Math.abs(startX - lastX));
+    if(Math.abs(startX - lastX) > 20){
+      if(lastX > startX){
+        if(activePokemon > 1){
+          showDetails(getPokemonById(activePokemon-1)[0]);
+          //console.log("prev");
+          
+          startX = null;
+          lastX = null;
+          
+        }
+      }else{
+        if(activePokemon<pokemonLimit){
+          showDetails(getPokemonById(activePokemon+1)[0]);
+          //console.log("next");
+          startX = null;
+          lastX = null;
+        
+        }
+      }
+    }
+    
+  });
   
   window.addEventListener("keydown", (e)=>{
     
@@ -269,52 +309,6 @@ let pokemonRepository = (function(){
         hideModal();
       }
   });
-  
-  //pointer event listeners
-  //Enables swiping between pokemon in a modal
-  modalContainer.addEventListener("pointerdown", (e)=>{
-    console.log("start",e.pageX);
-    startX = e.pageX;
-    
-  });
-  
-  //move
-  modalContainer.addEventListener("pointermove", (e)=>{
-    //console.log("move",e.pageX);
-    lastX = e.pageX;
-    
-  });
-  
-  modalContainer.addEventListener("pointerup", (e)=>{
-    //console.log("end",lastX);
-    //alert("up triggerd");
-    
-    if(lastX > startX){
-      console.log(lastX-startX);
-      if(lastX-startX > 10){
-        if(activePokemon > 1){
-          showDetails(getPokemonById(activePokemon-1)[0]);
-          //console.log("prev");
-          
-          startX = null;
-          lastX = null;
-          
-        }
-      }
-    }else{
-      console.log(startX - lastX)
-      if(startX - lastX > 10){
-        if(activePokemon<pokemonLimit)
-          showDetails(getPokemonById(activePokemon+1)[0]);
-          //console.log("next");
-          startX = null;
-          lastX = null;
-        
-        }
-    }
-  });
-
-  
   
   
   return { getAll: getAll, add: add, getPokemonByName: getPokemonByName, getPokemonById: getPokemonById, getPokemonByType: getPokemonByType, addListItem: addListItem, loadList: loadList, loadDetails: loadDetails};
