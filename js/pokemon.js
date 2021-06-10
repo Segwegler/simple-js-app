@@ -258,6 +258,7 @@ let pokemonRepository = (function(){
     if(!modalContainer.classList.contains("is-visible")){
       return;
     }
+    
     //console.log("start touch",e.touches[0].clientX);
     startX = e.touches[0].clientX;
     
@@ -267,6 +268,7 @@ let pokemonRepository = (function(){
     if(!startX){
       return;
     }
+    e.preventDefault();
     //console.log("start move",e.touches[0].clientX);
     lastX = e.touches[0].clientX;
     
@@ -284,20 +286,15 @@ let pokemonRepository = (function(){
         if(activePokemon > 1){
           showDetails(getPokemonById(activePokemon-1)[0]);
           //console.log("prev");
-          
-          startX = null;
-          lastX = null;
-          
         }
       }else{
         if(activePokemon<pokemonLimit){
           showDetails(getPokemonById(activePokemon+1)[0]);
           //console.log("next");
-          startX = null;
-          lastX = null;
-        
         }
       }
+      startX = null;
+      lastX = null;
       
     }
     
