@@ -276,8 +276,9 @@ let pokemonRepository = (function(){
     if(!startX){
       return;
     }
+    alert("delta: " + Math.abs(startX - lastX));
     //console.log("start end",Math.abs(startX - lastX));
-    if(Math.abs(startX - lastX) > 20){
+    if(Math.abs(startX - lastX) > 50){
       if(lastX > startX){
         if(activePokemon > 1){
           showDetails(getPokemonById(activePokemon-1)[0]);
@@ -296,6 +297,7 @@ let pokemonRepository = (function(){
         
         }
       }
+      
     }
     
   });
