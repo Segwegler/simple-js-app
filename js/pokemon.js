@@ -254,21 +254,25 @@ let pokemonRepository = (function(){
   let startX = null;
   let lastX = null;
   
-  window.addEventListener("touchstart", (e)=>{
-    
+  modalContainer.addEventListener("touchstart", (e)=>{
+    if(!modalContainer.classList.contains("is-visible")){
+      return;
+    }
     //console.log("start touch",e.touches[0].clientX);
     startX = e.touches[0].clientX;
     
   });
   
-  window.addEventListener("touchmove", (e)=>{
-    
+  modalContainer.addEventListener("touchmove", (e)=>{
+    if(!startX){
+      return;
+    }
     //console.log("start move",e.touches[0].clientX);
     lastX = e.touches[0].clientX;
     
   });
   
-  window.addEventListener("touchend", (e)=>{
+  modalContainer.addEventListener("touchend", (e)=>{
     if(!startX){
       return;
     }
