@@ -293,11 +293,13 @@ let pokemonRepository = (function(){
           //console.log("next");
         }
       }
-      startX = null;
-      lastX = null;
       
+      
+    }else{
+        hideModal();
     }
-    
+    startX = null;
+    lastX = null;
   });
   
   window.addEventListener("keydown", (e)=>{
