@@ -268,7 +268,10 @@ let pokemonRepository = (function(){
     if(!startX){
       return;
     }
-    e.preventDefault();
+    if(modalContainer.classList.contains("is-visible")){
+      e.preventDefault();
+    }
+    
     //console.log("start move",e.touches[0].clientX);
     lastX = e.touches[0].clientX;
     
@@ -278,8 +281,8 @@ let pokemonRepository = (function(){
     if(!startX || !lastX){
       return;
     }
-    alert("delta: " + Math.abs(startX - lastX)+" Last: "+lastX+ " Start: "+startX);
-    console.log("delta: " + Math.abs(startX - lastX)," Last: "+lastX, " Start: "+startX);
+    //alert("delta: " + Math.abs(startX - lastX)+" Last: "+lastX+ " Start: "+startX);
+    //console.log("delta: " + Math.abs(startX - lastX)," Last: "+lastX, " Start: "+startX);
     //console.log("start end",Math.abs(startX - lastX));
     if(Math.abs(startX - lastX) > 50){
       if(lastX > startX){
