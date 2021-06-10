@@ -271,6 +271,7 @@ let pokemonRepository = (function(){
   });
   
   //pointer event listeners
+  //Enables swiping between pokemon in a modal
   modalContainer.addEventListener("pointerdown", (e)=>{
     console.log("start",e.pageX);
     startX = e.pageX;
@@ -284,27 +285,28 @@ let pokemonRepository = (function(){
     
   });
   
-  
-  //ending event
-  //
-  //This should be pointer up but its not working for me for some reason
-  //
-  modalContainer.addEventListener("pointercancel", (e)=>{
-    console.log("end",lastX);
+  modalContainer.addEventListener("pointerup", (e)=>{
+    //console.log("end",lastX);
+    //alert("up triggerd");
+    
     if(lastX > startX){
-      if(lastX-startX > 5){
-        if(activePokemon<pokemonLimit){
-          showDetails(getPokemonById(activePokemon+1)[0]);
-          console.log("next");
+      console.log(lastX-startX);
+      if(lastX-startX > 10){
+        if(activePokemon > 1){
+          showDetails(getPokemonById(activePokemon-1)[0]);
+          //console.log("prev");
+          
           startX = null;
           lastX = null;
+          
         }
       }
     }else{
-      if(startX - lastX > 5){
-        if(activePokemon > 1)
-          showDetails(getPokemonById(activePokemon-1)[0]);
-          console.log("prev")
+      console.log(startX - lastX)
+      if(startX - lastX > 10){
+        if(activePokemon<pokemonLimit)
+          showDetails(getPokemonById(activePokemon+1)[0]);
+          //console.log("next");
           startX = null;
           lastX = null;
         
