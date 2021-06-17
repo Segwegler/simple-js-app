@@ -34,69 +34,7 @@ let pokemonRepository = (function(){
   //loads additional information form the pokeAPI for the specified pokemon
   function loadDetails(monster){
     let url = monster.detailsUrl;
-  function checkTypes(monster){
-    //check that id is an int
-    if(typeof(monster.id) !== "number" || monster.id % 1 !== 0)
-      return {good:false, var:monster.id, key:"id", error:"ERROR: id must be an int"};
     
-    
-    //check that name is a string
-    if(typeof(monster.name) !== "string" )
-      return {good:false, var:monster.name, key:"name", error:"ERROR: name must be a string"};
-    
-    
-    //check that height is a number
-    if(typeof(monster.height) !== "number")
-      return {good:false, var:monster.height, key:"height", error:"ERROR: height must be a number"};
-    
-    
-    //check that weight is a number
-    if(typeof(monster.weight) !== "number")
-      return {good:false, var:monster.weight, key:"weight", error:"ERROR: weight must be a number"};
-    
-    
-    //check that types is an array of strings 
-    if(!Array.isArray(monster.types)){
-      return {good:false, var:monster.types, key:"types", error:"ERROR: types must be an array of strings"};
-    }else{//make sure the elemets of the object are strings
-      let allStrings = true;
-      monster.types.forEach(function(e){(typeof(e) !== "string") ? allStrings=false: null});
-      if(!allStrings)
-        return {good:false, var:monster.types, key:"types", error:"ERROR: types must be an array of strings"};
-    }
-    
-    
-    //check description is a string
-    if(typeof(monster.description) !== "string" )
-      return {good:false, var:monster.description, key:"description", error:"ERROR: description must be a string"};
-    //check if can evolve is a bool
-    if(typeof(monster.canEvole) !== "boolean")
-      return {good:false, var:monster.canEvole, key:"canEvolve", error:"ERROR: canEvolve must be a boolean"};
-    
-    //chech can evolve
-    if(monster.canEvole === true){
-      // check that nextEvolution is an int
-      if(typeof(monster.nextEvolution) !== "number" || (monster.nextEvolution % 1)!== 0 || monster.nextEvolution < 1)
-        return {good:false, var:monster.nextEvolution, key:"nextEvolution", error:"ERROR: nextEvolution must be a int that is 1 or higher"};
-    }else{
-      if(monster.nextEvolution !== null)
-        return {good: false, var:monster.nextEvolution, key:"nextEvolution", error:"ERROR: if canEvolve is false nextEvolution must be null"};
-    }
-    
-    
-    // check that prevEvolution is a number or null
-    if(!(typeof(monster.prevEvolution) === "number" && (monster.prevEvolution % 1)=== 0 && monster.prevEvolution >= 1) && monster.prevEvolution !== null)
-      return {good:false, var:monster.prevEvolution, key:"prevEvolution", error:"ERROR: prevEvolution must be a int or null - "+monster.name+ " - "+monster.prevEvolution};
-    
-    
-    //chech that species is a string
-    if(typeof(monster.species) !== "string")
-      return {good:false, var:monster.species, key:"species", error:"ERROR: description must be a string"};
-    
-    
-    //return that there were no errors 
-    return {good:true, var:null, error:null};
-  }//END OF checkTypes function
     return $.ajax(url, {dataType: 'json'}).then(
       function(responseJSON){
         monster.imageUrl = responseJSON.sprites.front_default;
@@ -159,6 +97,7 @@ let pokemonRepository = (function(){
   //showDetails 
   //Opens a Modal with the pokemon info and image
   function showDetails(monster){
+    
     loadDetails(monster).then(function(){
       showModal(monster, monster.name, `Height: ${monster.height}m Weight: ${monster.weight}`, monster.imageUrl);
     }).catch(function(e){
@@ -173,6 +112,8 @@ let pokemonRepository = (function(){
     let list = $("#pokemon-list");
     let button = $(`<button type="button"></button>`);
       
+    
+    
     //populate button element
     
     button.addClass("list-group-item");
