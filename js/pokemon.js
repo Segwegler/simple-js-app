@@ -12,37 +12,28 @@ let pokemonRepository = (function(){
     return pokemonList;
   }
   
+  //loadList
+  //
   function loadList(){
-    return fetch(apiUrl).then(function(response){ 
-      return response.json();
-    }).then(function(json){
-      json.results.forEach(function(item){
-        let monster = {
+    return $.ajax(apiUrl, {dataType: 'json'}).then(
+      function(responseJSON){
+        responseJSON.results.forEach(function(item){
+          let monster = {
           name: item.name,
           detailsUrl: item.url,
           id: parseInt(item.url.slice(item.url.indexOf("pokemon")+8,item.url.length-1))
         };
         add(monster);
-      });
-    }).catch(function(e) {
-      console.log(e);
-    });
+          
+        });
+      }
+    ).catch(function(e){console.log(e)});
   }
   
+  //loadDetails
+  //loads additional information form the pokeAPI for the specified pokemon
   function loadDetails(monster){
     let url = monster.detailsUrl;
-    return fetch(url).then(function(response){
-      return response.json();
-    }).then(function(details){
-      monster.imageUrl = details.sprites.front_default;
-      monster.height = details.height;
-      monster.weight = details.weight;
-      monster.types = details.types;
-    }).catch(function(e){
-      console.log(e);
-    });
-  }
-  
   function checkTypes(monster){
     //check that id is an int
     if(typeof(monster.id) !== "number" || monster.id % 1 !== 0)
@@ -106,6 +97,15 @@ let pokemonRepository = (function(){
     //return that there were no errors 
     return {good:true, var:null, error:null};
   }//END OF checkTypes function
+    return $.ajax(url, {dataType: 'json'}).then(
+      function(responseJSON){
+        monster.imageUrl = responseJSON.sprites.front_default;
+        monster.height = responseJSON.height;
+        monster.weight = responseJSON.weight;
+        monster.types = responseJSON.types;
+      }
+    ).catch(function(e){console.log(e);});
+  }
   
   //FUNCTION add
   //add a pokemon to the list this uses checkTypes to verify that it is a good object
