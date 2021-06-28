@@ -120,12 +120,14 @@ let pokemonRepository = (function(){
     button.addClass("list-group-item-action");
     button.addClass("text-center");
     
+    
     //alternate between light and dark
     if(monster.id%2){ 
       button.addClass("list-group-item-light"); 
     }else{
        button.addClass("list-group-item-dark");
     }
+    button.addClass("text-dark");
     
     button.attr('id', `${monster.id}-${monster.name}`);
     button.attr('data-toggle', "modal");
