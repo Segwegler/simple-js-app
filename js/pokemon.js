@@ -13,7 +13,7 @@ let pokemonRepository = (function(){
   }
   
   //loadList
-  //
+  //lads te list of pokemon with minimal infor from 
   function loadList(){
     return $.ajax(apiUrl, {dataType: 'json'}).then(
       function(responseJSON){
@@ -119,7 +119,9 @@ let pokemonRepository = (function(){
     button.addClass("list-group-item");
     button.addClass("list-group-item-action");
     button.addClass("text-center");
-    if(monster.id%2){ //alternate between light and dark
+    
+    //alternate between light and dark
+    if(monster.id%2){ 
       button.addClass("list-group-item-light"); 
     }else{
        button.addClass("list-group-item-dark");
@@ -135,13 +137,14 @@ let pokemonRepository = (function(){
     button.text(name);
   
       
-    //adding list item to list
+    //add the button to the list of buttons
     list.append(button);
   }
   
   
   //
-  //Modal Functions
+  //showModal
+  //takes a pokemon from the list and creates a modal with that pokemons information
   //
   function showModal(monster){
     
@@ -149,18 +152,22 @@ let pokemonRepository = (function(){
     let modalHeader = $(".modal-title");
     let modalBody = $(".modal-body");
     
+    //cleat the modal titel and body
     modalTitle.empty();
     modalBody.empty();   
     
     let name = monster.name;
     name = name[0].toUpperCase() + name.slice(1);
+    //pokemons naem
     let nameElement = $(`<h2>${name}</h2>`);
     
+    //image of the pokemon
     let imgElement = $(`<img class="modal-img" src="${monster.imageUrl}">`)
     
+    //information element
     let heightElement = $(`<p>Height: ${monster.height}m</p>`);
     
-    
+    //add elemets to there proper locations in the modal
     modalTitle.append(nameElement);
     modalBody.append(imgElement);
     modalBody.append(heightElement);
